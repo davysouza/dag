@@ -44,7 +44,15 @@
                     </p>
                     <form method="post" action="SearchSubdominio">
                         <div class="search">
-                            <input id="valor" name="valor" type="text" placeholder="Valor de despesa" />
+                            <input id="data" name="data" type="text" placeholder="mes/ano" />
+                            <select id="funcao" name="funcao">
+                                <option value=""></option>
+                                <option value="educacao">Educação</option>
+                                <option value="saude">Saúde</option>
+                                <option value="ciencia">Ciência e Tecnologia</option>
+                                <option value="transporte">Transporte</option>
+                                <option value="saneamento">Saneamento Básico</option>
+                            </select>
                             <button id="btn_sub" type="submit">Buscar</button>
                         </div>
                     </form>
