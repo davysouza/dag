@@ -54,48 +54,51 @@ public class GastoFuncaoDAO {
         al.add(l);
         s.setJson(al);
     }
-    
+
     public void search2(GastoFuncao s) throws SQLException {
         PreparedStatement statement;
 
-        String SQL = "select sum(valor_pago_acumulado), cidade, funcao, mes_ano from DAG "
-                + "where funcao = 'SAÚDE' and mes_ano between '2015-01-01' and '2015-07-01' group by mes_ano,cidade,funcao order by mes_ano;";
-
-        statement = connection.prepareStatement(SQL);
+        String SQL_Campinas = "select sum(valor_pago_acumulado), cidade, funcao, mes_ano from DAG "
+                + "where cidade = 'Campinas' and funcao = 'SAÚDE' and mes_ano between '2015-01-01' and '2015-07-01' group by mes_ano,cidade,funcao order by mes_ano;";
+        String SQL_Sao_Jose = "select sum(valor_pago_acumulado), cidade, funcao, mes_ano from DAG "
+                + "where cidade = 'São José dos Campos' and funcao = 'SAÚDE' and mes_ano between '2015-01-01' and '2015-07-01' group by mes_ano,cidade,funcao order by mes_ano;";
+        statement = connection.prepareStatement(SQL_Campinas);
         ResultSet rs = statement.executeQuery(); // executes query
-        
+
         StringBuilder valorcampinas = new StringBuilder();
         StringBuilder valorsaojose = new StringBuilder();
         StringBuilder label = new StringBuilder();
-        label.append("[\"");
+        label.append("['");
         valorcampinas.append("['");
         valorsaojose.append("['");
-        
-        int flag_campinas = 0;
-        int flag_sao_jose = 0;
+
+        int flag = 0;
         while (rs.next()) {
-            if (flag_campinas == 1 && rs.getString(2).equals("Campinas")) {
+            if (flag == 1) {
                 valorcampinas.append("', '");
+                label.append("', '");
             }
-            else if(flag_sao_jose == 1 && rs.getString(2).equals("Campinas")){
-                label.append("\", \"");
+            valorcampinas.append(rs.getString(1));
+            label.append(rs.getString(4));
+            flag = 1;
+        }
+
+        statement = connection.prepareStatement(SQL_Sao_Jose);
+        rs = statement.executeQuery();
+        flag = 0;
+        while (rs.next()) {
+            if (flag == 1) {
                 valorsaojose.append("', '");
             }
-            if(rs.getString(2).equals("Campinas")){
-                valorcampinas.append(rs.getFloat(1));
-                flag_campinas = 1;
-            }
-            else{
-                valorsaojose.append(rs.getString(1));
-                label.append(rs.getString(4));
-                flag_sao_jose = 1;
-            }
+            valorsaojose.append(rs.getString(1));
+            flag = 1;
         }
+        
         
         valorcampinas.append("']");
         valorsaojose.append("']");
-        label.append("\"]");
-        
+        label.append("']");
+
         String vcampinas = valorcampinas.toString();
         String vsaojose = valorsaojose.toString();
         String l = label.toString();
@@ -105,7 +108,7 @@ public class GastoFuncaoDAO {
         al.add(vsaojose);
         al.add(l);
         s.setJson(al);
-        
+
     }
 
     private String maskMoney(String value) {
