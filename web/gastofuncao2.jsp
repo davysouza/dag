@@ -69,7 +69,6 @@
         <script>
             <% GastoFuncao s = (GastoFuncao) request.getAttribute("gastofuncao_bean");%>
             var d = <%= s.getJson()%>;
-            alert(d[0])
             var lineChartData = {
                 labels: d[2],
                 datasets: [
