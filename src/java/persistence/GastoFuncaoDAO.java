@@ -42,7 +42,7 @@ public class GastoFuncaoDAO {
             }
 //            float val = rs.getFloat(1);
 //            valor.append(val).append("");
-            valor.append(rs.getFloat(1)/1000000₢);
+            valor.append(rs.getFloat(1)/1000000);
             label.append(rs.getString(2));
             cont++;
         }
