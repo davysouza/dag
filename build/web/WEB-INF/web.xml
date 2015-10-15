@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>SearchLicitacao</servlet-name>
-        <servlet-class>controller.SearchLicitacao</servlet-class>
+        <servlet-class>controller.SearchGastoFuncao2</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchSubdominio</servlet-name>

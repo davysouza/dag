@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Subdominio" %>
+<%@page import="model.GastoFuncao" %>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -42,9 +42,15 @@
                 <h1>Ranking: Despesas Subdomínio</h1>
             </div>
             <div id="divTable" class="main clearfix">
-                <table id="table_result" class="display"></table>
+                <div style="width:100%">
+                    <div>
+                        <canvas id="canvas" height="450" width="800"></canvas>
+                    </div>
+                </div>
             </div>
         </section>
+
+
         <!-- EndContent -->
 
         <!-- Footer -->
@@ -58,18 +64,47 @@
         <script type="text/javascript" src="assets/js/jquery.maskMoney.js"></script>
         <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="assets/js/jquery-add.js"></script>
+        <script src="assets/js/Chart.js"></script>
+
         <script>
-            // Table
-            <% Subdominio s = (Subdominio) request.getAttribute("subdominio_bean"); %>
-            var data = <%= s.getJson() %>;
-            $('#table_result').DataTable({
-                data: data,
-                columns: [
-                    {title: 'Posição'},
-                    {title: 'Descrição'},
-                    {title: 'Valor'}
+            <% GastoFuncao s = (GastoFuncao) request.getAttribute("gastofuncao_bean");%>
+            var d = <%= s.getJson()%>;
+            alert(d[2]);
+            
+            var lineChartData = {
+                labels: d[2],
+                datasets: [
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: d[0]
+                    },
+                    {
+                        label: "My Second dataset",
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: d[1]
+                    }
                 ]
-            });
+
+            }
+
+            window.onload = function () {
+                var ctx = document.getElementById("canvas").getContext("2d");
+                window.myLine = new Chart(ctx).Line(lineChartData, {
+                    responsive: true
+                });
+            }
+
         </script>
     </body>
 </html>

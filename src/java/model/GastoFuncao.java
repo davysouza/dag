@@ -41,9 +41,5 @@ public class GastoFuncao {
         this.data = data;
     }
     
-    public String batata(){
-        return "batata";
-    }
-    
     
 }

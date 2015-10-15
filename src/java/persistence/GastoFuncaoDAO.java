@@ -67,7 +67,7 @@ public class GastoFuncaoDAO {
         StringBuilder valorcampinas = new StringBuilder();
         StringBuilder valorsaojose = new StringBuilder();
         StringBuilder label = new StringBuilder();
-        label.append("['");
+        label.append("[\"");
         valorcampinas.append("['");
         valorsaojose.append("['");
         
@@ -78,11 +78,11 @@ public class GastoFuncaoDAO {
                 valorcampinas.append("', '");
             }
             else if(flag_sao_jose == 1 && rs.getString(2).equals("Campinas")){
-                label.append("', '");
+                label.append("\", \"");
                 valorsaojose.append("', '");
             }
             if(rs.getString(2).equals("Campinas")){
-                valorcampinas.append(rs.getString(1));
+                valorcampinas.append(rs.getFloat(1));
                 flag_campinas = 1;
             }
             else{
@@ -94,7 +94,7 @@ public class GastoFuncaoDAO {
         
         valorcampinas.append("']");
         valorsaojose.append("']");
-        label.append("']");
+        label.append("\"]");
         
         String vcampinas = valorcampinas.toString();
         String vsaojose = valorsaojose.toString();

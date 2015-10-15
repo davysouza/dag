@@ -69,9 +69,9 @@
         <script>
             <% GastoFuncao s = (GastoFuncao) request.getAttribute("gastofuncao_bean"); %>
             var d = <%= s.getJson()%>;
-            alert(d[0]);
+            
             var barChartData = {
-                labels: d[2],
+                labels: d[1],
                 datasets: [
                     {
                         fillColor: "rgba(151,187,205,0.5)",
