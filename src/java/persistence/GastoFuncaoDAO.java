@@ -19,9 +19,11 @@ public class GastoFuncaoDAO {
 
     public void search(GastoFuncao s) throws SQLException {
         PreparedStatement statement;
-
+        String cidade = "Campinas";
+        String inicio = "2015-01-01";
+        String fim = "2015-07-01";
         String SQL = "SELECT sum(valor_pago_acumulado), funcao FROM DAG "
-                + "WHERE mes_ano BETWEEN '2015-01-01' AND '2015-07-01' AND cidade = 'Campinas' "
+                + "WHERE mes_ano BETWEEN '" + inicio + "' AND '" + fim + "' AND cidade = '" + cidade + "' "
                 + "GROUP BY funcao;";
 
         statement = connection.prepareStatement(SQL);
@@ -57,11 +59,15 @@ public class GastoFuncaoDAO {
 
     public void search2(GastoFuncao s) throws SQLException {
         PreparedStatement statement;
-
+        String cidade_a = "Campinas";
+        String cidade_b = "São José dos Campos";
+        String inicio = "2015-01-01";
+        String fim = "2015-07-01";
+        String funcao = "SAÚDE"; //deve ser caixa alta, senão shablau!!!
         String SQL_Campinas = "select sum(valor_pago_acumulado), cidade, funcao, mes_ano from DAG "
-                + "where cidade = 'Campinas' and funcao = 'SAÚDE' and mes_ano between '2015-01-01' and '2015-07-01' group by mes_ano,cidade,funcao order by mes_ano;";
+                + "where cidade = '" + cidade_a + "' and funcao = '" + funcao + "' and mes_ano between '" + inicio + "' and '" + fim + "' group by mes_ano,cidade,funcao order by mes_ano;";
         String SQL_Sao_Jose = "select sum(valor_pago_acumulado), cidade, funcao, mes_ano from DAG "
-                + "where cidade = 'São José dos Campos' and funcao = 'SAÚDE' and mes_ano between '2015-01-01' and '2015-07-01' group by mes_ano,cidade,funcao order by mes_ano;";
+                + "where cidade = '" + cidade_b + "' and funcao = '" + funcao + "' and mes_ano between '" + inicio + "' and '" + fim + "' group by mes_ano,cidade,funcao order by mes_ano;";
         statement = connection.prepareStatement(SQL_Campinas);
         ResultSet rs = statement.executeQuery(); // executes query
 
@@ -93,8 +99,7 @@ public class GastoFuncaoDAO {
             valorsaojose.append(rs.getString(1));
             flag = 1;
         }
-        
-        
+
         valorcampinas.append("']");
         valorsaojose.append("']");
         label.append("']");
