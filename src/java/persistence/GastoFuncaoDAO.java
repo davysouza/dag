@@ -54,6 +54,60 @@ public class GastoFuncaoDAO {
         al.add(l);
         s.setJson(al);
     }
+    
+    public void search2(GastoFuncao s) throws SQLException {
+        PreparedStatement statement;
+
+        String SQL = "select sum(valor_pago_acumulado), cidade, funcao, mes_ano from DAG "
+                + "where funcao = 'SAÚDE' and mes_ano between '2015-01-01' and '2015-07-01' group by mes_ano,cidade,funcao order by mes_ano;";
+
+        statement = connection.prepareStatement(SQL);
+        ResultSet rs = statement.executeQuery(); // executes query
+        
+        StringBuilder valorcampinas = new StringBuilder();
+        StringBuilder valorsaojose = new StringBuilder();
+        StringBuilder label = new StringBuilder();
+        label.append("['");
+        valorcampinas.append("['");
+        valorsaojose.append("['");
+        
+        int cont = 0;
+        int flagcidade = 0;
+        while (rs.next()) {
+            if (cont > 0 && flagcidade == 1) {
+                valorcampinas.append("', '");
+                label.append("', '");
+            }
+            else if(cont > 0 && flagcidade == 2){
+                valorsaojose.append("', '");
+            }
+            if(rs.getString(1).toString() == "Campinas"){
+                valorcampinas.append(rs.getString(1));
+                label.append(rs.getString(4));
+                flagcidade = 1;
+            }
+            else{
+                valorsaojose.append(rs.getString(1));
+                flagcidade = 2;
+            }
+            cont++;
+        }
+        
+        valorcampinas.append("']");
+        valorsaojose.append("']");
+        label.append("']");
+        
+        String vcampinas = valorcampinas.toString();
+        String vsaojose = valorsaojose.toString();
+        String l = label.toString();
+
+        ArrayList<String> al = new ArrayList();
+        al.add(vcampinas);
+        al.add(vsaojose);
+        al.add(l);
+        s.setJson(al);
+        
+    }
 
     private String maskMoney(String value) {
         char[] chValue = value.toCharArray();

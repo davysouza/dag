@@ -18,9 +18,9 @@ public class ConnectionFactory {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
 
-            String connection = "jdbc:postgresql://localhost/dag_project";
+            String connection = "jdbc:postgresql://localhost/DAG projeto";
             String user = "postgres";
-            String password = "postgres";
+            String password = "25041993";
 
             Connection conn = DriverManager.getConnection(connection, user, password);            
             return conn;

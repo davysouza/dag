@@ -48,6 +48,11 @@ public class SubdominioDAO {
         String table = sb.toString();
         s.setJson(table);
     }
+    
+    public void search2(Subdominio s) throws SQLException {
+        
+        
+    }
 
     private String maskMoney(String value) {
         char[] chValue = value.toCharArray();
