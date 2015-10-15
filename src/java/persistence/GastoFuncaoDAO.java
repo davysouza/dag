@@ -42,7 +42,7 @@ public class GastoFuncaoDAO {
             }
 //            float val = rs.getFloat(1);
 //            valor.append(val).append("");
-            valor.append(rs.getString(1));
+            valor.append(rs.getFloat(1)/1000000₢);
             label.append(rs.getString(2));
             cont++;
         }
@@ -84,7 +84,7 @@ public class GastoFuncaoDAO {
                 valorcampinas.append("', '");
                 label.append("', '");
             }
-            valorcampinas.append(rs.getString(1));
+            valorcampinas.append(rs.getFloat(1)/1000000);
             label.append(rs.getString(4));
             flag = 1;
         }
@@ -96,7 +96,7 @@ public class GastoFuncaoDAO {
             if (flag == 1) {
                 valorsaojose.append("', '");
             }
-            valorsaojose.append(rs.getString(1));
+            valorsaojose.append(rs.getFloat(1)/1000000);
             flag = 1;
         }
 
@@ -161,7 +161,7 @@ public class GastoFuncaoDAO {
             }
         }
 
-        return "R$ " + res;
+        return res.replaceAll("\\.", "").replaceAll(",", ".");
     }
 
     private String maskMoneyDois(String value) {
