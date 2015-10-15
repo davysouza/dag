@@ -71,26 +71,25 @@ public class GastoFuncaoDAO {
         valorcampinas.append("['");
         valorsaojose.append("['");
         
-        int cont = 0;
-        int flagcidade = 0;
+        int flag_campinas = 0;
+        int flag_sao_jose = 0;
         while (rs.next()) {
-            if (cont > 0 && flagcidade == 1) {
+            if (flag_campinas == 1 && rs.getString(2).equals("Campinas")) {
                 valorcampinas.append("', '");
-                label.append("', '");
             }
-            else if(cont > 0 && flagcidade == 2){
+            else if(flag_sao_jose == 1 && rs.getString(2).equals("Campinas")){
+                label.append("', '");
                 valorsaojose.append("', '");
             }
-            if(rs.getString(1).toString() == "Campinas"){
+            if(rs.getString(2).equals("Campinas")){
                 valorcampinas.append(rs.getString(1));
-                label.append(rs.getString(4));
-                flagcidade = 1;
+                flag_campinas = 1;
             }
             else{
                 valorsaojose.append(rs.getString(1));
-                flagcidade = 2;
+                label.append(rs.getString(4));
+                flag_sao_jose = 1;
             }
-            cont++;
         }
         
         valorcampinas.append("']");

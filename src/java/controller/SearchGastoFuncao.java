@@ -44,7 +44,7 @@ public class SearchGastoFuncao extends HttpServlet {
         try {
             GastoFuncaoDAO sdao = new GastoFuncaoDAO();
 
-            sdao.search(s);
+            sdao.search2(s);
             request.setAttribute("gastofuncao_bean", s);
             RequestDispatcher dispatcher;
             dispatcher = request.getRequestDispatcher("/gastofuncao.jsp");
